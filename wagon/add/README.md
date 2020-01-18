@@ -1,4 +1,4 @@
-# Add exec example
+# Add example
 
 * This is a example package to execute WebAssembly in Go package.
 * This command adds two numbers using Wasm loaded in Go package.
@@ -27,5 +27,5 @@ $ add 1 3
 ### Test
 
 ```
-go test ./func_test.go
+go test ./...
 ```
