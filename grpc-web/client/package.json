@@ -1,0 +1,7 @@
+{
+  "name": "syumai-grpc-web-example-client",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "syumai",
+  "license": "MIT"
+}
