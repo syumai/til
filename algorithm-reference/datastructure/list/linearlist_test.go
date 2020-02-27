@@ -57,8 +57,8 @@ func TestLinearList_Add(t *testing.T) {
 				if tt.valid && err != nil {
 					t.Fatalf("unexpected error: %v", err)
 				}
-				if !tt.valid && err != ErrLinearListNodeOutOfBounds {
-					t.Fatalf("want err: %v, got: %v", ErrLinearListNodeOutOfBounds, err)
+				if !tt.valid && err != ErrLinearListOutOfBounds {
+					t.Fatalf("want err: %v, got: %v", ErrLinearListOutOfBounds, err)
 				}
 			})
 		}
@@ -162,8 +162,8 @@ func TestLinearList_Get(t *testing.T) {
 					}
 					return
 				}
-				if !tt.valid && err != ErrLinearListNodeOutOfBounds {
-					t.Fatalf("want err: %v, got: %v", ErrLinearListNodeOutOfBounds, err)
+				if !tt.valid && err != ErrLinearListOutOfBounds {
+					t.Fatalf("want err: %v, got: %v", ErrLinearListOutOfBounds, err)
 				}
 			})
 		}

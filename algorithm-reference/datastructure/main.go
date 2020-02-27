@@ -7,14 +7,18 @@ import (
 )
 
 func main() {
-	l := list.LinearListNode{
+	a := list.LinearListNode{
 		Value: 1,
 	}
 
-	a := list.LinearListNode{
+	b := list.LinearListNode{
 		Value: 2,
 	}
-	l.Next = &a
+	a.Next = &b
+
+	l := list.LinearList{
+		FirstNode: &a,
+	}
 
 	l.Add(1, 3)
 

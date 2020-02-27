@@ -3,7 +3,7 @@ package list
 import "fmt"
 
 var (
-	ErrLinearListNodeOutOfBounds = fmt.Errorf("index out of bounds")
+	ErrLinearListOutOfBounds = fmt.Errorf("index out of bounds")
 )
 
 type (
@@ -19,7 +19,7 @@ type (
 
 func (list *LinearList) Add(i int, value int) error {
 	if i < 0 || i > list.Length() {
-		return ErrLinearListNodeOutOfBounds
+		return ErrLinearListOutOfBounds
 	}
 	n := LinearListNode{
 		Value: value,
@@ -58,7 +58,7 @@ func (list *LinearList) Add(i int, value int) error {
 
 func (list *LinearList) Get(i int) (*LinearListNode, error) {
 	if i < 0 || i > list.Length()-1 {
-		return nil, ErrLinearListNodeOutOfBounds
+		return nil, ErrLinearListOutOfBounds
 	}
 	n := list.FirstNode
 	j := 0
