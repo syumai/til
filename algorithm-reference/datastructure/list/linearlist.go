@@ -131,20 +131,22 @@ func (list *LinearList) Length() int {
 	return l
 }
 
-func (list *LinearList) ForEach(f func(*LinearListNode)) {
+func (list *LinearList) Range(f func(int, *LinearListNode)) {
+	i := 0
 	n := list.FirstNode
 	for {
 		if n == nil {
 			break
 		}
-		f(n)
+		f(i, n)
+		i++
 		n = n.Next
 	}
 }
 
 func (list *LinearList) ToSlice() []*LinearListNode {
 	var s []*LinearListNode
-	list.ForEach(func(n *LinearListNode) {
+	list.Range(func(_ int, n *LinearListNode) {
 		s = append(s, n)
 	})
 	return s

@@ -97,7 +97,7 @@ func TestLinearList_Add(t *testing.T) {
 				}
 
 				var got []int
-				l.ForEach(func(n *LinearListNode) {
+				l.Range(func(_ int, n *LinearListNode) {
 					got = append(got, n.Value)
 				})
 				if !reflect.DeepEqual(tt.want, got) {
@@ -114,7 +114,7 @@ func TestLinearList_Add(t *testing.T) {
 			}
 
 			var got []int
-			l.ForEach(func(n *LinearListNode) {
+			l.Range(func(_ int, n *LinearListNode) {
 				got = append(got, n.Value)
 			})
 			want := []int{0}
@@ -203,7 +203,7 @@ func TestLinearList_Delete(t *testing.T) {
 				}
 
 				var got []int
-				l.ForEach(func(n *LinearListNode) {
+				l.Range(func(_ int, n *LinearListNode) {
 					got = append(got, n.Value)
 				})
 				if !reflect.DeepEqual(tt.want, got) {
@@ -356,14 +356,21 @@ func TestListLinearList_Length(t *testing.T) {
 	}
 }
 
-func TestListLinearList_ForEach_ToSlice(t *testing.T) {
+func TestListLinearList_Range_ToSlice(t *testing.T) {
 	l := newLinearList(3)
 	want := []int{0, 1, 2}
-	var got []int
-	l.ForEach(func(n *LinearListNode) {
-		got = append(got, n.Value)
+	var (
+		gotIndices []int
+		gotValues  []int
+	)
+	l.Range(func(i int, n *LinearListNode) {
+		gotIndices = append(gotIndices, n.Value)
+		gotValues = append(gotValues, n.Value)
 	})
-	if !reflect.DeepEqual(want, got) {
-		t.Fatalf("want: %v, got: %v", want, got)
+	if !reflect.DeepEqual(want, gotIndices) {
+		t.Fatalf("want indices: %v, got: %v", want, gotIndices)
+	}
+	if !reflect.DeepEqual(want, gotValues) {
+		t.Fatalf("want values: %v, got: %v", want, gotValues)
 	}
 }
