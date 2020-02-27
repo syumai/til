@@ -3,7 +3,8 @@ package list
 import "fmt"
 
 var (
-	ErrLinearListOutOfBounds = fmt.Errorf("index out of bounds")
+	ErrLinearListOutOfBounds = fmt.Errorf("index out of bounds of linear list")
+	ErrLinearListHasNoEntry  = fmt.Errorf("linear list has no entry")
 )
 
 type (
@@ -53,6 +54,31 @@ func (list *LinearList) Add(i int, value int) error {
 	b := a.Next
 	a.Next = &n
 	n.Next = b
+	return nil
+}
+
+func (list *LinearList) Delete(i int) error {
+	l := list.Length()
+	if l == 0 {
+		return ErrLinearListHasNoEntry
+	}
+	if i < 0 || i > l-1 {
+		return ErrLinearListOutOfBounds
+	}
+
+	// delete first node
+	if i == 0 {
+		list.FirstNode = list.FirstNode.Next
+		return nil
+	}
+
+	// delete node at i
+	a, err := list.Get(i - 1)
+	if err != nil {
+		return err
+	}
+	b := a.Next
+	a.Next = b.Next
 	return nil
 }
 

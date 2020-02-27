@@ -125,6 +125,95 @@ func TestLinearList_Add(t *testing.T) {
 	})
 }
 
+func TestLinearList_Delete(t *testing.T) {
+	t.Run("ErrOutOfBounds", func(t *testing.T) {
+		const linearListLength = 5
+		tests := []struct {
+			i     int
+			valid bool
+		}{
+			{
+				i:     -1,
+				valid: false,
+			},
+			{
+				i:     0,
+				valid: true,
+			},
+			{
+				i:     linearListLength - 1,
+				valid: true,
+			},
+			{
+				i:     linearListLength,
+				valid: false,
+			},
+		}
+		for _, tt := range tests {
+			t.Run(fmt.Sprintf("%d-%v", tt.i, tt.valid), func(t *testing.T) {
+				l := newLinearList(linearListLength)
+				err := l.Delete(tt.i)
+				if tt.valid && err != nil {
+					t.Fatalf("unexpected error: %v", err)
+				}
+				if !tt.valid && err != ErrLinearListOutOfBounds {
+					t.Fatalf("want err: %v, got: %v", ErrLinearListOutOfBounds, err)
+				}
+			})
+		}
+	})
+
+	t.Run("ErrHasNoEntry", func(t *testing.T) {
+		l := &LinearList{}
+		err := l.Delete(0)
+		if err != ErrLinearListHasNoEntry {
+			t.Fatalf("want err: %v, got: %v", ErrLinearListHasNoEntry, err)
+		}
+	})
+
+	t.Run("ValidCases", func(t *testing.T) {
+		const linearListLength = 3
+		tests := []struct {
+			name string
+			i    int
+			want []int
+		}{
+			{
+				name: "Delete top",
+				i:    0,
+				want: []int{1, 2},
+			},
+			{
+				name: "Delete middle",
+				i:    1,
+				want: []int{0, 2},
+			},
+			{
+				name: "Delete last",
+				i:    2,
+				want: []int{0, 1},
+			},
+		}
+		for _, tt := range tests {
+			t.Run(tt.name, func(t *testing.T) {
+				l := newLinearList(linearListLength)
+				err := l.Delete(tt.i)
+				if err != nil {
+					t.Fatalf("unexpected error: %v", err)
+				}
+
+				var got []int
+				l.ForEach(func(n *LinearListNode) {
+					got = append(got, n.Value)
+				})
+				if !reflect.DeepEqual(tt.want, got) {
+					t.Fatalf("want: %v, got: %v", tt.want, got)
+				}
+			})
+		}
+	})
+}
+
 func TestLinearList_Get(t *testing.T) {
 	t.Run("ErrOutOfBounds", func(t *testing.T) {
 		const linearListLength = 5

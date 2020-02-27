@@ -21,6 +21,8 @@ func main() {
 	}
 
 	l.Add(1, 3)
+	l.Add(0, 4)
+	l.Delete(1)
 
 	for _, n := range l.ToSlice() {
 		fmt.Println(n.Value)
