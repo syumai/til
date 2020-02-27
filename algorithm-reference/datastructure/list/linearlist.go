@@ -6,33 +6,47 @@ var (
 	ErrLinearListNodeOutOfBounds = fmt.Errorf("index out of bounds")
 )
 
-type LinearListNode struct {
-	Value int
-	Next  *LinearListNode
-}
+type (
+	LinearList struct {
+		FirstNode *LinearListNode
+	}
 
-func (node *LinearListNode) Add(i int, value int) error {
-	if i < 0 || i > node.Length()-1 {
+	LinearListNode struct {
+		Value int
+		Next  *LinearListNode
+	}
+)
+
+func (list *LinearList) Add(i int, value int) error {
+	if i < 0 || i > list.Length() {
 		return ErrLinearListNodeOutOfBounds
 	}
 	n := LinearListNode{
 		Value: value,
 	}
 
+	// insert to blank list
+	if list.FirstNode == nil {
+		list.FirstNode = &n
+		return nil
+	}
+
 	// insert to top
 	if i == 0 {
-		n.Next = node.Next
+		a := list.FirstNode
 
-		tmpVal := node.Value
-		node.Value = n.Value
+		n.Next = a.Next
+
+		tmpVal := a.Value
+		a.Value = n.Value
 		n.Value = tmpVal
 
-		node.Next = &n
+		a.Next = &n
 		return nil
 	}
 
 	// insert to i
-	a, err := node.Get(i - 1)
+	a, err := list.Get(i - 1)
 	if err != nil {
 		return err
 	}
@@ -42,11 +56,11 @@ func (node *LinearListNode) Add(i int, value int) error {
 	return nil
 }
 
-func (node *LinearListNode) Get(i int) (*LinearListNode, error) {
-	if i < 0 || i > node.Length()-1 {
+func (list *LinearList) Get(i int) (*LinearListNode, error) {
+	if i < 0 || i > list.Length()-1 {
 		return nil, ErrLinearListNodeOutOfBounds
 	}
-	n := node
+	n := list.FirstNode
 	j := 0
 	for {
 		if i == j {
@@ -58,9 +72,13 @@ func (node *LinearListNode) Get(i int) (*LinearListNode, error) {
 	return n, nil
 }
 
-func (node *LinearListNode) Length() int {
+func (list *LinearList) Length() int {
+	n := list.FirstNode
+	if n == nil {
+		return 0
+	}
+
 	l := 1
-	n := node
 	for {
 		n = n.Next
 		if n == nil {
@@ -71,20 +89,20 @@ func (node *LinearListNode) Length() int {
 	return l
 }
 
-func (node *LinearListNode) ForEach(f func(*LinearListNode)) {
-	n := node
+func (list *LinearList) ForEach(f func(*LinearListNode)) {
+	n := list.FirstNode
 	for {
-		f(n)
-		n = n.Next
 		if n == nil {
 			break
 		}
+		f(n)
+		n = n.Next
 	}
 }
 
-func (node *LinearListNode) ToSlice() []*LinearListNode {
+func (list *LinearList) ToSlice() []*LinearListNode {
 	var s []*LinearListNode
-	node.ForEach(func(n *LinearListNode) {
+	list.ForEach(func(n *LinearListNode) {
 		s = append(s, n)
 	})
 	return s
