@@ -307,7 +307,7 @@ func TestListLinearList_Blank(t *testing.T) {
 			want: true,
 		},
 		{
-			name:       "exits first node",
+			name:       "exists first node",
 			linearList: newLinearList(1),
 			want:       false,
 		},
