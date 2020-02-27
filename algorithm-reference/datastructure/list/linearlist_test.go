@@ -251,10 +251,24 @@ func TestLinearList_Get(t *testing.T) {
 					}
 					return
 				}
-				if !tt.valid && err != ErrLinearListOutOfBounds {
+				if err != ErrLinearListOutOfBounds {
 					t.Fatalf("want err: %v, got: %v", ErrLinearListOutOfBounds, err)
 				}
+				if n != nil {
+					t.Fatal("node must not exist")
+				}
 			})
+		}
+	})
+
+	t.Run("ErrHasNoEntry", func(t *testing.T) {
+		l := &LinearList{}
+		n, err := l.Get(0)
+		if err != ErrLinearListHasNoEntry {
+			t.Fatalf("want err: %v, got: %v", ErrLinearListHasNoEntry, err)
+		}
+		if n != nil {
+			t.Fatal("node must not exist")
 		}
 	})
 
@@ -272,6 +286,40 @@ func TestLinearList_Get(t *testing.T) {
 			t.Fatalf("want node value: %d, got: %d", linearListLength-1, n.Value)
 		}
 	})
+}
+
+func TestListLinearList_Blank(t *testing.T) {
+	tests := []struct {
+		name       string
+		linearList *LinearList
+		want       bool
+	}{
+		{
+			name:       "nil list",
+			linearList: nil,
+			want:       true,
+		},
+		{
+			name: "nil first node",
+			linearList: &LinearList{
+				FirstNode: nil,
+			},
+			want: true,
+		},
+		{
+			name:       "exits first node",
+			linearList: newLinearList(1),
+			want:       false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.linearList.Blank() != tt.want {
+				t.Fatalf("want: %v, got %v", tt.want, tt.linearList.Blank())
+			}
+		})
+	}
 }
 
 func TestListLinearList_Length(t *testing.T) {

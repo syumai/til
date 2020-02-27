@@ -19,7 +19,7 @@ type (
 )
 
 func (list *LinearList) Add(i int, value int) error {
-	if i < 0 || i > list.Length() {
+	if i < 0 {
 		return ErrLinearListOutOfBounds
 	}
 	n := LinearListNode{
@@ -58,11 +58,10 @@ func (list *LinearList) Add(i int, value int) error {
 }
 
 func (list *LinearList) Delete(i int) error {
-	l := list.Length()
-	if l == 0 {
+	if list.Blank() {
 		return ErrLinearListHasNoEntry
 	}
-	if i < 0 || i > l-1 {
+	if i < 0 {
 		return ErrLinearListOutOfBounds
 	}
 
@@ -77,33 +76,50 @@ func (list *LinearList) Delete(i int) error {
 	if err != nil {
 		return err
 	}
+
 	b := a.Next
+	if b == nil {
+		return ErrLinearListOutOfBounds
+	}
+
 	a.Next = b.Next
 	return nil
 }
 
 func (list *LinearList) Get(i int) (*LinearListNode, error) {
-	if i < 0 || i > list.Length()-1 {
+	if list.Blank() {
+		return nil, ErrLinearListHasNoEntry
+	}
+	if i < 0 {
 		return nil, ErrLinearListOutOfBounds
 	}
+
 	n := list.FirstNode
 	j := 0
 	for {
 		if i == j {
 			break
 		}
+
 		n = n.Next
+		if n == nil {
+			return nil, ErrLinearListOutOfBounds
+		}
 		j++
 	}
 	return n, nil
 }
 
+func (list *LinearList) Blank() bool {
+	return list == nil || list.FirstNode == nil
+}
+
 func (list *LinearList) Length() int {
-	n := list.FirstNode
-	if n == nil {
+	if list.Blank() {
 		return 0
 	}
 
+	n := list.FirstNode
 	l := 1
 	for {
 		n = n.Next
