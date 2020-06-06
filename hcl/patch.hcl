@@ -1,11 +1,16 @@
 add {
-  fruits = [
-    "cherry",
-  ]
+  favorites {
+    fruits = [
+      "cherry",
+    ]
+  }
+  hello = "world"
 }
 
 remove {
-  fruits = [
-    "banana",
-  ]
+  favorites {
+    fruits = [
+      "banana",
+    ]
+  }
 }

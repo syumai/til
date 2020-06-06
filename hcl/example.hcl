@@ -1,4 +1,6 @@
-fruits = [
-  "apple",
-  "banana",
-]
+favorites {
+  fruits = [
+    "apple",
+    "banana",
+  ]
+}
