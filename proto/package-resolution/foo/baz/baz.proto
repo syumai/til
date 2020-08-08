@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package foo.baz;
+
+option go_package = "github.com/syumai/til/proto/package-resolution/foo/baz";
+
+import "foo.proto";
+import "bar/bar.proto";
+
+message Foo {
+  string msg = 1;
+}
+
+message Baz {
+  foo.Foo foo1 = 1;
+  Foo foo2 = 2; // redeclared in baz.proto
+
+  foo.bar.Bar bar1 = 3;
+  bar.Bar bar2 = 4;
+  // Bar bar3 = 5; // NG
+}

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package foo.bar;
+
+option go_package = "github.com/syumai/til/proto/package-resolution/foo/bar";
+
+import "foo.proto";
+
+message Bar {
+  foo.Foo foo1 = 1;
+  Foo foo2 = 2; // OK
+}
+
