@@ -17,7 +17,7 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
 	defer stop()
 
-	f, err := fifo.OpenFifo(ctx, fileName, syscall.O_CREAT|syscall.O_RDWR, os.ModePerm)
+	f, err := fifo.OpenFifo(ctx, fileName, syscall.O_CREAT|syscall.O_RDWR, 0_600|os.ModeNamedPipe)
 	if err != nil {
 		panic(err)
 	}
