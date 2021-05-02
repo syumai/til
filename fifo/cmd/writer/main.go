@@ -7,8 +7,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-
-	"github.com/containerd/fifo"
 )
 
 const fileName = "fifo"
@@ -17,7 +15,11 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
 	defer stop()
 
-	f, err := fifo.OpenFifo(ctx, fileName, syscall.O_CREAT|syscall.O_RDWR, 0_600|os.ModeNamedPipe)
+	err := syscall.Mkfifo(fileName, 0_600)
+	if err != nil {
+		panic(err)
+	}
+	f, err := os.OpenFile(fileName, syscall.O_WRONLY, os.ModeNamedPipe)
 	if err != nil {
 		panic(err)
 	}
