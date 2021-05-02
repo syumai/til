@@ -21,6 +21,11 @@ func main() {
 		panic(err)
 	}
 
+	go func() {
+		<-ctx.Done()
+		_ = f.Close()
+	}()
+
 	_, err = io.Copy(os.Stdout, f)
 	if err != nil {
 		panic(err)

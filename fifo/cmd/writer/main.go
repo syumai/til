@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"io"
 	"os"
 	"os/signal"
@@ -21,8 +22,13 @@ func main() {
 		panic(err)
 	}
 
+	go func() {
+		<-ctx.Done()
+		_ = f.Close()
+	}()
+
 	_, err = io.Copy(f, os.Stdin)
-	if err != nil {
+	if err != nil && !errors.Is(err, os.ErrClosed) {
 		panic(err)
 	}
 
