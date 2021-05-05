@@ -1,7 +1,10 @@
 #include <stdio.h>
 
+#define HELLO "hello,"
+#define WORLD "world"
+
 int main()
 {
-  printf("hello, world!\n");
+  printf(HELLO " " WORLD "!\n");
 }
 
