@@ -1,7 +1,9 @@
-#include <fcntl.h>
-#define PERMS 0600
+#include <unistd.h>
+#define	BUFSIZ  64
 
 int main() {
-  int fd;
-  fd = creat("example.txt", PERMS);
+  int n;
+  char buf[BUFSIZ];
+  while((n = read(STDIN_FILENO, buf, BUFSIZ)))
+    write(STDOUT_FILENO, buf, n);
 }
