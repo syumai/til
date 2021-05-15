@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     }
     return 0;
   }
-  while(--argc > 0) {
+  while(--argc) {
     fd = open(*++argv, O_RDONLY);
     result = copy(STDOUT_FILENO, fd);
     if(result < 0) {
