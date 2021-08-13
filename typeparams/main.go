@@ -24,13 +24,24 @@ func (i I) String() string {
 	return strconv.Itoa(int(i))
 }
 
-func print[T SignedIntStringer](s []T) {
+type F float32
+
+func (f F) String() string {
+	return fmt.Sprintf("%f", f)
+}
+
+func Print[T SignedIntStringer](s []T) {
 	for _, v := range s {
 		fmt.Println(v)
 	}
 }
 
 func main() {
-	print([]I{1, 2, 3})
+	Print([]I{1, 2, 3})
+	//Print([]int{1, 2, 3})
+	//Print([]F{1, 2, 3})
+	var sis SignedIntStringer
+	sis = I(1)
+	_ = sis
 }
 
