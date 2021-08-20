@@ -10,7 +10,7 @@ type Map[K comparable, V any] interface {
 	~map[K]V
 }
 
-func Clone[M Map[K, V], K comparable, V any](a M) M {
+func Clone[K comparable, V any](a map[K]V) map[K]V {
 	b := make(map[K]V)
 	for key, value := range a {
 		b[key] = value
@@ -27,7 +27,7 @@ func Filter[M Map[K, V], K comparable, V any](m M, keep func(K, V) bool) {
 }
 
 func SeparateEvenOddMaps[M Map[K, V], K comparable, V Integer](m M) (even, odd M) {
-	even, odd = Clone[M, K, V](m), Clone[M, K, V](m)
+	even, odd = Clone[K, V](m), Clone[K, V](m)
 	Filter(even, func (k K, v V) bool { return v % 2 == 0 })
 	Filter(odd, func (k K, v V) bool { return v % 2 == 1 })
 	return
