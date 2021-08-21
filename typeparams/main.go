@@ -6,7 +6,7 @@ import (
 )
 
 type SignedInt interface {
-	~int | ~int8 | ~int16 | ~int32 | ~int64
+// 	~int | ~int8 | ~int16 | ~int32 | ~int64
 }
 
 type Stringer interface {
@@ -30,14 +30,14 @@ func (f F) String() string {
 	return fmt.Sprintf("%f", f)
 }
 
-func Print[T SignedIntStringer](s []T) {
+func print[T SignedIntStringer](s []T) {
 	for _, v := range s {
 		fmt.Println(v)
 	}
 }
 
 func main() {
-	Print([]I{1, 2, 3})
+	print([]I{1, 2, 3})
 	//Print([]int{1, 2, 3})
 	//Print([]F{1, 2, 3})
 	var sis SignedIntStringer
