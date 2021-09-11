@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+
+<body>
+  <script>
+    document.cookie = "data=secret_text";
+  </script>
+  <iframe id="iframe"></iframe>
+  <script>
+    const iframe = document.getElementById("iframe");
+    iframe.srcdoc = `
+<script>
+const script = document.createElement("script");
+script.src = "exploit.js";
+script.type = "module";
+window.parent.document.body.appendChild(script);
+</` + `script>`;
+  </script>
+</body>
+
+</html>
