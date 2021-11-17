@@ -29,10 +29,10 @@ func StringsLen(v []string) uint64 {
 }
 
 func research() {
-	s1 := (interface{})(make([]int, 0, 0))
-	s2 := (interface{})(make([]int, 0, 1))
-	s3 := (interface{})(make([]int, 1, 1))
-	s4 := (interface{})(make([]int, 0x1111, 0x2222))
+	s1 := make([]int, 0, 0)
+	s2 := make([]int, 0, 1)
+	s3 := make([]int, 1, 1)
+	s4 := make([]int, 0x1111, 0x2222)
 
 	/* step 1 */
 	fmt.Printf("s1: %v\n", *(*[32]byte)(unsafe.Pointer(&s1)))
