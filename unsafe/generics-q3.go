@@ -7,21 +7,18 @@ import (
 	"unsafe"
 )
 
-type P struct {
-	x int
-	y int
-}
+type P struct { x int; y int }
 
-func Marshal(dest io.Writer, p *P) error {
-	ary := (*[unsafe.Sizeof(*p)]byte)(unsafe.Pointer(p))
+func Marshal[T any](dest io.Writer, v *T) error {
+	ary := (*[unsafe.Sizeof(*v)]byte)(unsafe.Pointer(v))
 	s := ary[:]
 	rd := bytes.NewReader(s)
 	_, err := io.Copy(dest, rd)
 	return err
 }
 
-func Unmarshal(src io.Reader, p *P) error {
-	ary := (*[unsafe.Sizeof(*p)]byte)(unsafe.Pointer(p))
+func Unmarshal[T any](src io.Reader, v *T) error {
+	ary := (*[unsafe.Sizeof(*v)]byte)(unsafe.Pointer(v))
 	s := ary[:]
 	_, err := io.ReadFull(src, s)
 	return err
@@ -41,3 +38,4 @@ func main() {
 
 	fmt.Println(decoded)
 }
+

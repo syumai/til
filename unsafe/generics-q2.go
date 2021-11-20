@@ -8,12 +8,12 @@ import (
 const MaxCapacity = 1024
 
 func main() {
-	ints := MakeInts(3, 5)
+	ints := Make([]int(nil), 3, 5)
 	ints[0] = 1
 	ints[1] = 2
 	ints[2] = 3
 
-	strings := MakeStrings(3, 5)
+	strings := Make([]string(nil), 3, 5)
 	strings[0] = "1"
 	strings[1] = "2"
 	strings[2] = "3"
@@ -28,22 +28,14 @@ type Slice struct {
 	Cap      int
 }
 
-func MakeInts(len_, cap_ int) []int {
-	var underlyingArray [MaxCapacity]int
+func Make[S ~[]T, T any](_ S, len_, cap_ int) S {
+	var underlyingArray [MaxCapacity]T
 	s := Slice{
 		ArrayPtr: uintptr(unsafe.Pointer(&underlyingArray)),
 		Len:      len_,
 		Cap:      cap_,
 	}
-	return *(*[]int)(unsafe.Pointer(&s))
+	return *(*S)(unsafe.Pointer(&s))
 }
 
-func MakeStrings(len_, cap_ int) []string {
-	var underlyingArray [MaxCapacity]string
-	s := Slice{
-		ArrayPtr: uintptr(unsafe.Pointer(&underlyingArray)),
-		Len:      len_,
-		Cap:      cap_,
-	}
-	return *(*[]string)(unsafe.Pointer(&s))
-}
+
