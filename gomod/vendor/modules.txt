@@ -1,0 +1,19 @@
+# github.com/goccy/go-json v0.8.1
+github.com/goccy/go-json
+github.com/goccy/go-json/internal/decoder
+github.com/goccy/go-json/internal/encoder
+github.com/goccy/go-json/internal/encoder/vm
+github.com/goccy/go-json/internal/encoder/vm_color
+github.com/goccy/go-json/internal/encoder/vm_color_indent
+github.com/goccy/go-json/internal/encoder/vm_indent
+github.com/goccy/go-json/internal/errors
+github.com/goccy/go-json/internal/runtime
+# github.com/syumai/emojidata v0.0.0-20211231133001-94d00e994884
+## explicit
+github.com/syumai/emojidata
+# github.com/syumai/til/gomod116 v0.0.0-20220101031357-f0659ba5f1a4
+## explicit
+github.com/syumai/til/gomod116
+# github.com/syumai/til/gomod117 v0.0.0-20220101032118-1b81e12bf8d4
+## explicit
+github.com/syumai/til/gomod117
