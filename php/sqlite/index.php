@@ -17,5 +17,5 @@ if (in_array($_GET['meal'], $meals)) {
   print '</table>';
   return;
 }
-print "Unkown meal.";
+print "Unknown meal.";
 ?>
