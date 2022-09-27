@@ -1,3 +1,4 @@
+# Based on: https://github.com/WalshyDev/workerd-example
 using Workerd = import "/workerd/workerd.capnp";
 
 const config :Workerd.Config = (
