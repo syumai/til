@@ -26,13 +26,13 @@ filename*=utf-8''%s`, fileName, url.PathEscape(fileName)))
 	http.HandleFunc("/file2", func(w http.ResponseWriter, req *http.Request) {
 		w.Header().Set("Content-Disposition", fmt.Sprintf(`attachment;
 filename=%q`, fileName))
-		io.Copy(w, strings.NewReader("ファイル の 中身"))
+		io.Copy(w, strings.NewReader(fileContent))
 	})
 	// filename*=だけ指定
 	http.HandleFunc("/file3", func(w http.ResponseWriter, req *http.Request) {
 		w.Header().Set("Content-Disposition", fmt.Sprintf(`attachment;
 filename*=utf-8''%s`, url.PathEscape(fileName)))
-		io.Copy(w, strings.NewReader("ファイル の 中身"))
+		io.Copy(w, strings.NewReader(fileContent))
 	})
 	fmt.Printf("Listening: %s\n", port)
 	http.ListenAndServe(port, nil)
