@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/syumai/til/gotip/510541/stream/maps"
-	"github.com/syumai/til/gotip/510541/stream/slices"
+	"github.com/syumai/til/gotip/510541/stream/stream"
 )
 
 func main() {
@@ -13,8 +14,10 @@ func main() {
 		1: "b",
 		2: "c",
 	}
-	keys := slices.Collect(maps.Keys(m))
-	values := slices.Collect(maps.Values(m))
-	fmt.Println("keys:", keys)
-	fmt.Println("values:", values)
+	upperValues := stream.Map(maps.Values(m), func(s string) string {
+		return strings.ToUpper(s)
+	})
+	for v := range upperValues {
+		fmt.Println(v)
+	}
 }
