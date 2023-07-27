@@ -14,7 +14,7 @@ func main() {
 		2: "c",
 	}
 	keys := slices.Collect(maps.Keys(m))
-	values := slices.Collect(maps.Keys(m))
+	values := slices.Collect(maps.Values(m))
 	fmt.Println("keys:", keys)
 	fmt.Println("values:", values)
 }
