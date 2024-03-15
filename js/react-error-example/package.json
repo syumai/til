@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "dev": "vite"
+  },
+  "dependencies": {
+    "react": "18.0.0",
+    "react-dom": "18.0.0"
+  },
+  "devDependencies": {
+    "vite": "^5.1.6"
+  }
+}
