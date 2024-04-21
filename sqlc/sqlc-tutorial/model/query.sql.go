@@ -20,15 +20,15 @@ RETURNING id, name, bio
 `
 
 type CreateAuthorParams struct {
-	Name string
-	Bio  sql.NullString
+	Name string         `json:"name"`
+	Bio  sql.NullString `json:"bio"`
 }
 
-func (q *Queries) CreateAuthor(ctx context.Context, arg CreateAuthorParams) (Author, error) {
+func (q *Queries) CreateAuthor(ctx context.Context, arg CreateAuthorParams) (*Author, error) {
 	row := q.db.QueryRowContext(ctx, createAuthor, arg.Name, arg.Bio)
 	var i Author
 	err := row.Scan(&i.ID, &i.Name, &i.Bio)
-	return i, err
+	return &i, err
 }
 
 const deleteAuthor = `-- name: DeleteAuthor :exec
@@ -46,11 +46,11 @@ SELECT id, name, bio FROM authors
 WHERE id = ? LIMIT 1
 `
 
-func (q *Queries) GetAuthor(ctx context.Context, id int64) (Author, error) {
+func (q *Queries) GetAuthor(ctx context.Context, id int64) (*Author, error) {
 	row := q.db.QueryRowContext(ctx, getAuthor, id)
 	var i Author
 	err := row.Scan(&i.ID, &i.Name, &i.Bio)
-	return i, err
+	return &i, err
 }
 
 const listAuthors = `-- name: ListAuthors :many
@@ -58,19 +58,19 @@ SELECT id, name, bio FROM authors
 ORDER BY name
 `
 
-func (q *Queries) ListAuthors(ctx context.Context) ([]Author, error) {
+func (q *Queries) ListAuthors(ctx context.Context) ([]*Author, error) {
 	rows, err := q.db.QueryContext(ctx, listAuthors)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Author
+	var items []*Author
 	for rows.Next() {
 		var i Author
 		if err := rows.Scan(&i.ID, &i.Name, &i.Bio); err != nil {
 			return nil, err
 		}
-		items = append(items, i)
+		items = append(items, &i)
 	}
 	if err := rows.Close(); err != nil {
 		return nil, err
@@ -89,9 +89,9 @@ WHERE id = ?
 `
 
 type UpdateAuthorParams struct {
-	Name string
-	Bio  sql.NullString
-	ID   int64
+	Name string         `json:"name"`
+	Bio  sql.NullString `json:"bio"`
+	ID   int64          `json:"id"`
 }
 
 func (q *Queries) UpdateAuthor(ctx context.Context, arg UpdateAuthorParams) error {

@@ -7,4 +7,6 @@ sql:
       go:
         package: model
         out: model
+        emit_json_tags: true
+        emit_result_struct_pointers: true
 
