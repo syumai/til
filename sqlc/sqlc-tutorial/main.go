@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo"
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/syumai/til/sqlc/sqlc-tutorial/model"
 )
 
