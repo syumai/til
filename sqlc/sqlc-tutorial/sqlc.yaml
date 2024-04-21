@@ -5,6 +5,6 @@ sql:
     schema: schema.sql
     gen:
       go:
-        package: tutorial
-        out: tutorial
+        package: model
+        out: model
 
