@@ -6,5 +6,4 @@ func add(x, y int32) int32 {
 }
 
 func main() {
-	select {}
 }
