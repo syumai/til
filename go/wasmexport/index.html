@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <form id="form">
+      <input name="x" type="number" />
+      <input name="y" type="number" />
+      <button>Add</button>
+    </form>
+    <div id="result"></div>
+    <script src="wasm_exec.js"></script>
+    <script type="module">
+      const go = new Go();
+      const { instance } = await WebAssembly.instantiateStreaming(
+        fetch("main.wasm"),
+        go.importObject
+      );
+      go.run(instance);
+
+      const form = document.getElementById("form");
+      const result = document.getElementById("result");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const x = e.target.x.valueAsNumber;
+        const y = e.target.y.valueAsNumber;
+        result.textContent = `Result: ${instance.exports.add(x, y)}`;
+      });
+    </script>
+  </body>
+</html>
