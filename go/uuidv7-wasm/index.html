@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>UUID v7 generator (Go 1.27 + Wasm)</title>
+  </head>
+  <body>
+    <h1>UUID v7 generator</h1>
+    <button id="generate" type="button">Generate UUID v7</button>
+    <pre id="result"></pre>
+    <script src="wasm_exec.js"></script>
+    <script type="module">
+      const go = new Go();
+      const { instance } = await WebAssembly.instantiateStreaming(
+        fetch("main.wasm"),
+        go.importObject
+      );
+      go.run(instance);
+
+      const result = document.getElementById("result");
+      document.getElementById("generate").addEventListener("click", () => {
+        result.textContent = generateUUIDv7();
+      });
+    </script>
+  </body>
+</html>
